@@ -18,8 +18,9 @@ namespace PackageTracking {
     // Before submitting your assignment, delete all TODO comments
     // including this one.
   }
-  
-  PackageStatus::PackageStatus(const std::string& tracking_number) noexcept {
+
+  PackageStatus::PackageStatus(const std::string& tracking_number) noexcept
+  : tracking_number_(tracking_number) {
     // TODO: Implement this function.
     // Before submitting your assignment, delete all TODO comments
     // including this one.
@@ -28,11 +29,12 @@ namespace PackageTracking {
   const std::string& PackageStatus::TrackingNumber() const noexcept {
     return tracking_number_;
   }
-  
+
   int PackageStatus::Size() const noexcept {
     // TODO: Implement this function, including the return statement.
     // Before submitting your assignment, delete all TODO comments
     // including this one.
+
     return 0;
   }
 
@@ -40,7 +42,9 @@ namespace PackageTracking {
     // TODO: Implement this function, including the return statement.
     // Before submitting your assignment, delete all TODO comments
     // including this one.
+    if(size_.empty()){
     return false;
+  }
   }
 
   void PackageStatus::AddUpdate(const std::string& description,
@@ -49,27 +53,41 @@ namespace PackageTracking {
     // TODO: Implement this function.
     // Before submitting your assignment, delete all TODO comments
     // including this one.
+
   }
 
   bool PackageStatus::MoveCursorBackward() noexcept {
     // TODO: Implement this function, including the return statement.
     // Before submitting your assignment, delete all TODO comments
     // including this one.
-    return false;
+    if(size_ <= 0){
+      return false;
+    }
+    else{
+      return true;
+    }
   }
 
   bool PackageStatus::MoveCursorForward() noexcept {
     // TODO: Implement this function, including the return statement.
     // Before submitting your assignment, delete all TODO comments
     // including this one.
+    if(size_ <= 0 /*or if movecursorbackward was true*/ ){
     return false;
+    }
+    else{
+      return true;
+    }
   }
 
   const ShippingUpdate& PackageStatus::GetCursor() const {
     // TODO: Implement this function, including the return statement.
     // Before submitting your assignment, delete all TODO comments
     // including this one.
+    if(size_.empty()){
     throw std::logic_error("not implemented");
+    }
+    return //where the cursor is at;
   }
 
   std::string PackageStatus::DescribeCursorUpdate() {

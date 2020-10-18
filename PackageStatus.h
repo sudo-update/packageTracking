@@ -93,7 +93,7 @@ namespace PackageTracking {
     //
     // If the PackageStatus is empty, throws std::logic_error.
     std::string DescribeCursorUpdate();
-    
+
     // Return a description of all ShippingUpdates prior to the cursor
     // (so not including the cursor update). Each update's description
     // follows the format of ShippingUpdate::Describe. The description
@@ -120,14 +120,15 @@ namespace PackageTracking {
     // The PackageStatus *may* be empty. If so, this function returns
     // an empty string.
     std::string DescribeAllUpdates();
-    
+
   private:
     // TODO: Add data members here.
     // Before submitting your assignment, delete all TODO comments
     // including this one.
+    std::int size_;
     std::string tracking_number_;
   };
-  
+
 }
 
 #endif
