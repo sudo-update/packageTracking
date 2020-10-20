@@ -9,6 +9,7 @@
 
 #include <stdexcept> // std::invalid_argument, std::logic_error
 #include <string> // std::string
+#include <list> //std::list 
 
 // TODO: You may add additional #includes here if you wish.
 // Before submitting your assignment, delete all TODO comments
@@ -122,11 +123,9 @@ namespace PackageTracking {
     std::string DescribeAllUpdates();
 
   private:
-    // TODO: Add data members here.
-    // Before submitting your assignment, delete all TODO comments
-    // including this one.
-    std::int size_;
     std::string tracking_number_;
+    std::list<ShippingUpdate> updates_;
+    std::list<ShippingUpdate>::iterator cursor_;
   };
 
 }
