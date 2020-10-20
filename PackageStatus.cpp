@@ -58,6 +58,7 @@ namespace PackageTracking {
 //      if (timestamp - it4->Timestamp() >= 0) {
         updates_.push_back(new_element);
       } else { throw std::invalid_argument("Given timestamp is invalid."); }
+//      if (new_element.Timestamp() < it4->Timestamp()) {  throw std::invalid_argument("Given timestamp is invalid."); }
     }
     // if (!updates_.empty()) {
     //   std::list<ShippingUpdate>::iterator it4 = updates_.end();
