@@ -14,9 +14,7 @@
 
 namespace PackageTracking {
 
-  PackageStatus::PackageStatus() noexcept {
-
-  }
+  PackageStatus::PackageStatus() noexcept { }
 
   PackageStatus::PackageStatus(const std::string& tracking_number) noexcept
   : tracking_number_(tracking_number){ }
@@ -51,14 +49,15 @@ namespace PackageTracking {
 				std::time_t timestamp) {
     ShippingUpdate new_element(description, location, timestamp);
     if (updates_.empty()) {
-      updates_.push_back(new_element);
+      updates_.push_front(new_element);
       cursor_ = updates_.begin();
     } else {
       std::list<ShippingUpdate>::iterator it4 = updates_.end();
-        if (timestamp >= it4->Timestamp()) {
-          updates_.push_back(new_element);
-        } else { throw std::invalid_argument("Given timestamp is invalid."); }
-        cursor_ = updates_.begin();
+      if (new_element.Timestamp() >= it4->Timestamp()) {
+//      if (difftime(new_element.Timestamp(), it4->Timestamp()) >= 0) {
+//      if (timestamp - it4->Timestamp() >= 0) {
+        updates_.push_back(new_element);
+      } else { throw std::invalid_argument("Given timestamp is invalid."); }
     }
     // if (!updates_.empty()) {
     //   std::list<ShippingUpdate>::iterator it4 = updates_.end();
@@ -78,7 +77,7 @@ namespace PackageTracking {
       // false. Otherwise, this moves the cursor one step backwards and
       // returns true.
   bool PackageStatus::MoveCursorBackward() noexcept {
-    if(updates_.empty() || cursor_ == updates_.begin()){
+    if(updates_.empty() && cursor_ == updates_.begin()){
       return false;
     }
     else{
@@ -94,7 +93,7 @@ namespace PackageTracking {
       // false. Otherwise, this moves the cursor one step forward and
       // returns true.
   bool PackageStatus::MoveCursorForward() noexcept {
-    if (updates_.empty() || cursor_ == updates_.end()) {
+    if (updates_.empty() && cursor_ == updates_.end()) {
     return false;
     } else{
       cursor_++;
