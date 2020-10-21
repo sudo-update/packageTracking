@@ -52,7 +52,7 @@ namespace PackageTracking {
       updates_.push_front(new_element);
       cursor_ = updates_.begin();
     } else {
-      std::list<ShippingUpdate>::iterator it4 = updates_.end();
+      std::list<ShippingUpdate>::iterator it4 = --updates_.end();
       if (new_element.Timestamp() >= it4->Timestamp()) {
 //      if (difftime(new_element.Timestamp(), it4->Timestamp()) >= 0) {
 //      if (timestamp - it4->Timestamp() >= 0) {
