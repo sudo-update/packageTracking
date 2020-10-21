@@ -99,7 +99,8 @@ namespace PackageTracking {
     if (updates_.empty()) {
       return false;
     }
-    if (cursor_ == updates_.end()) {
+
+    if (cursor_ == --updates_.end()) {
       return false;
     } else{
       cursor_++;
