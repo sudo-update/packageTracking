@@ -9,11 +9,7 @@
 
 #include <stdexcept> // std::invalid_argument, std::logic_error
 #include <string> // std::string
-#include <list> //std::list 
-
-// TODO: You may add additional #includes here if you wish.
-// Before submitting your assignment, delete all TODO comments
-// including this one.
+#include <list> //std::list
 
 #include "ShippingUpdate.h"
 
@@ -123,8 +119,13 @@ namespace PackageTracking {
     std::string DescribeAllUpdates();
 
   private:
+    //Tracking Number is a unique identifier
     std::string tracking_number_;
+
+    //Doubly-Linked List containing updates
     std::list<ShippingUpdate> updates_;
+
+    //keeps track of our position in our List
     std::list<ShippingUpdate>::iterator cursor_;
   };
 

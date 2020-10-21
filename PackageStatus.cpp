@@ -4,10 +4,6 @@
 // class PackageStatus
 ////////////////////////////////////////////////////////////////////////////////
 
-// TODO: You may add additional #includes here if you wish.
-// Before submitting your assignment, delete all TODO comments
-// including this one.
-
 #include "PackageStatus.h"
 #include <exception>
 #include <list>
@@ -31,19 +27,6 @@ namespace PackageTracking {
     return updates_.empty();
   }
 
-      // Add an update with the given description, location, and
-      // timestamp.
-      //
-      // Updates must follow chronological order. So if this
-      // PackageStatus is not empty, the given timestamp must be greater
-      // than or equal to the timestamp of the last update. (Equal
-      // timestamps are allowed because mail-handling equipment sometimes
-      // generates two events in the same second.)
-      //
-      // When the first update is added, the cursor is moved to point at
-      // that new update.
-      //
-      // Throws std::invalid_argument if the given timestamp is invalid.
   void PackageStatus::AddUpdate(const std::string& description,
 				const std::string& location,
 				std::time_t timestamp) {
@@ -52,31 +35,13 @@ namespace PackageTracking {
       updates_.push_front(new_element);
       cursor_ = updates_.begin();
     } else {
-      std::list<ShippingUpdate>::iterator it4 = --updates_.end();
-      if (new_element.Timestamp() >= it4->Timestamp()) {
-//      if (difftime(new_element.Timestamp(), it4->Timestamp()) >= 0) {
-//      if (timestamp - it4->Timestamp() >= 0) {
+      std::list<ShippingUpdate>::iterator last_update = --updates_.end();
+      if (new_element.Timestamp() >= last_update->Timestamp()) {
         updates_.push_back(new_element);
       } else { throw std::invalid_argument("Given timestamp is invalid."); }
-//      if (new_element.Timestamp() < it4->Timestamp()) {  throw std::invalid_argument("Given timestamp is invalid."); }
     }
-    // if (!updates_.empty()) {
-    //   std::list<ShippingUpdate>::iterator it4 = updates_.end();
-    //   if (timestamp >= it4->Timestamp()) {
-    //     updates_.push_back(new_element);
-    //   } else { throw std::invalid_argument("Given timestamp is invalid."); }
-    // } else {
-    //   updates_.push_back(new_element);
-    //   cursor_ = updates_.begin();
-    // }
   }
 
-      // Attempt to move the cursor backward one step.
-      //
-      // If the PackageStatus is empty, or the cursor is already
-      // pointing to the first update, this has no effect and returns
-      // false. Otherwise, this moves the cursor one step backwards and
-      // returns true.
   bool PackageStatus::MoveCursorBackward() noexcept {
     if(updates_.empty()) {
       return false;
@@ -89,17 +54,10 @@ namespace PackageTracking {
     }
   }
 
-      // Attempt to move the cursor forward one step.
-      //
-      // If the PackageStatus is empty, or the cursor is already
-      // pointing to the last update, this has no effect and returns
-      // false. Otherwise, this moves the cursor one step forward and
-      // returns true.
   bool PackageStatus::MoveCursorForward() noexcept {
     if (updates_.empty()) {
       return false;
     }
-
     if (cursor_ == --updates_.end()) {
       return false;
     } else{
@@ -108,10 +66,6 @@ namespace PackageTracking {
     }
   }
 
-      // Return a reference to the ShippingUpdate object that the cursor
-      // is pointing at. The PackageStatus must not be empty.
-      //
-      // If the PackageStatus is empty, throws std::logic_error.
   const ShippingUpdate& PackageStatus::GetCursor() const {
     if (updates_.empty()) {
       throw std::logic_error("PackageStatus is empty.");
@@ -120,65 +74,42 @@ namespace PackageTracking {
     }
   }
 
-      // Return a description of the ShippingUpdate object that the
-      // cursor is pointing at, following the same format as
-      // ShippingUpdate::Describe. The PackageStatus must not be empty.
-      //
-      // If the PackageStatus is empty, throws std::logic_error.
   std::string PackageStatus::DescribeCursorUpdate() {
     return cursor_->Describe();
   }
 
-      // Return a description of all ShippingUpdates prior to the cursor
-      // (so not including the cursor update). Each update's description
-      // follows the format of ShippingUpdate::Describe. The description
-      // strings are concatenated together in chronological order. The
-      // PackageStatus must not be empty.
-      //
-      // If the PackageStatus is empty, throws std::logic_error.
   std::string PackageStatus::DescribePreviousUpdates() {
     std::string previous_updates;
     if (updates_.empty()) {
       throw std::logic_error("PackageStatus is empty.");
     } else {
-      for (std::list<ShippingUpdate>::iterator it = updates_.begin(); it != cursor_; it++ ) {
-        previous_updates += it->Describe();
-      }
+      for (std::list<ShippingUpdate>::iterator prev_updates = updates_.begin();
+           prev_updates != cursor_; prev_updates++ ) {
+             previous_updates += prev_updates->Describe();
+           }
     }
     return previous_updates;
   }
 
-      // Return a description of all ShippingUpdates, starting at the
-      // cursor, and including all later updates. Each update's
-      // description follows the format of ShippingUpdate::Describe. The
-      // description strings are concatenated together in chronological
-      // order. The PackageStatus must not be empty.
-      //
-      // If the PackageStatus is empty, throws std::logic_error.
   std::string PackageStatus::DescribeFollowingUpdates() {
     std::string following_updates;
     if (updates_.empty()) {
       throw std::logic_error("PackageStatus is empty.");
     } else {
-      for (std::list<ShippingUpdate>::iterator it2 = cursor_; it2 != updates_.end(); it2++ ) {
-        following_updates += it2->Describe();
-      }
+      for (std::list<ShippingUpdate>::iterator follow_updates = cursor_;
+           follow_updates != updates_.end(); follow_updates++ ) {
+             following_updates += follow_updates->Describe();
+           }
     }
     return following_updates;
   }
 
-      // Return a description of all ShippingUpdates. Each update's
-      // description follows the format of ShippingUpdate::Describe. The
-      // description strings are concatenated together in chronological
-      // order.
-      //
-      // The PackageStatus *may* be empty. If so, this function returns
-      // an empty string.
   std::string PackageStatus::DescribeAllUpdates() {
     std::string all_updates;
-    for (std::list<ShippingUpdate>::iterator it3 = updates_.begin(); it3 != updates_.end(); it3++ ) {
-      all_updates += it3->Describe();
-    }
+    for (std::list<ShippingUpdate>::iterator every_update = updates_.begin();
+         every_update != updates_.end(); every_update++ ) {
+           all_updates += every_update->Describe();
+         }
     return all_updates;
   }
 
